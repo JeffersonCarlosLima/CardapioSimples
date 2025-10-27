@@ -1,0 +1,221 @@
+/* col-lg (desktops) >= 992px */
+/* col-md (tablet) <=< 768px a 991px */
+/* col-sm (celular) <=< 576px a 767px */
+/* col- (tablet e celular) <=< 576px a 767px */
+
+@media screen and (max-width: 767px) {
+    .col-one {
+        padding: 0px 32px !important;
+    }
+
+    .no-mobile {
+        display: none;
+    }
+    p b {
+        display: flex !important;
+        width: 100%;
+        padding: 0px !important;
+        margin: 0px !important;
+    }
+    .navbar-collapse {
+        background-color: var(--color-secundary);
+        padding: 16px;
+        border-radius: 40px;
+        text-align: center;
+    }
+
+    .nav-item {
+        padding: 16px;
+    }
+
+    .navbar-collapse .btn-white {
+        margin-top: 20px;
+        padding: 8px 8px;
+        width: 100%;
+        margin: 0;
+    }
+
+    .navbar-collapse .btn-icon-carrinho {
+        display: none !important;
+    }
+
+    .banner {
+
+        padding-top: 50px;
+        padding-bottom: 50px;
+
+    }
+
+    .text-banner h1 {
+        font-size: 32px;
+
+    }
+
+    .text-banner p {
+        font-size: 16px;
+        text-align: justify;
+    }
+
+    .btn-white,
+    .btn-yellow {
+        padding: 14px 24px;
+        font-size: 14px;
+    }
+
+    .botoes-banner a {
+        width: 100%;
+
+    }
+
+    .botoes-banner .btn-icon-left {
+        padding: 8px 16px 8px 8px !important;
+    }
+
+
+    h1 {
+        font-size: 32px;
+        text-align: center;
+    }
+    .container-do-container-meu{
+        width: 100%;
+    }
+    .container-menu {
+        overflow-x: auto;
+        overflow-y: hidden;
+        /*hidden*/
+        display: flex;
+        justify-content: stretch;
+        align-items: center;
+        padding: 20px  16px!important;
+
+    }
+
+    .servicos {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+    /*Ocultando mensagem no celular*/
+    .mensagem-cardapio{
+        display: none;
+    }
+    .card-item {
+        display: flex;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: start !important;
+        margin-bottom: 16px !important;
+        width: 100% !important;
+        height: 128px;
+        gap: 10px !important;
+        padding: 0px !important;
+    }
+
+    .img-produto img {
+        display: flex;
+        flex-shrink: 0;
+        width: 120px !important;
+        height: 120px !important;
+        padding: 0;
+        margin: 0;
+        border-radius: 8px;
+
+    }
+    .description{
+        display: flex;
+        font-size: 14px;
+        font-weight: 400;
+        width: 90%;
+        margin: 0;
+    }
+    .card-item .title-produto {
+        display: flex;
+        font-size: 16px;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 95%;
+        text-align: start;
+        overflow: hidden;
+    }
+
+    .card-item .price-produto {
+        display: flex;
+        font-size: 18px;
+        padding: 0px !important;
+        margin-top: 0;
+        width: 160px;
+    }
+    .pr-5{
+        padding: 0px !important;
+        text-align: justify;
+    }
+    .card-secundary {
+        padding: 32px;
+        border-radius: 32px;
+        margin: 0px 32px;
+    }
+
+    .hint-title {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .btn-carrinho {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+    #btnVerMais{
+        margin-top: 16px !important;
+    }
+    .modal-full{
+        padding: 24px;
+    }
+    .item-carrinho{
+        padding: 8px  0px!important;
+    }
+    .modal-full .img-produto img{
+        width: 150px !important;
+        margin: 0px !important;
+        vertical-align: none;
+    }
+    .dados-produto{
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        padding-top: 8px;
+        width: 100% !important;
+        gap: 0px !important;
+    }
+    .item-carrinho .price-produto {
+        font-size: 14px;
+    }
+    .info-produto{
+        width: fit-content;
+        
+    }
+    .item-carrinho .add-numero-itens{
+        font-size: 14px;
+        padding: 6px 0px;
+        width: 24px !important;
+    }
+    .item-carrinho .btn-mais .btn-menos{
+        padding: 2px 2px !important;
+    }
+
+    .carrinho-vazio{
+        font-size: 16px;
+    }
+    .title-carrinho{
+        font-size: 16px;
+    }
+    .container-total a , span, i{
+        font-size: 14px;
+        gap: 8px;
+    }
+    .container-total span i{
+        margin-right: 8px;
+    }
+
+}
