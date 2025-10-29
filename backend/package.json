@@ -1,0 +1,12 @@
+{
+  "name": "cardapio-simples-backend",
+  "version": "1.0.0",
+  "main": "api.js",
+  "scripts": {
+    "start": "node api.js"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "express": "^5.1.0"
+  }
+}
