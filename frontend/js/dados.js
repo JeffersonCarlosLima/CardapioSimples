@@ -1,6 +1,10 @@
-const API_URL = window.location.hostname.includes('localhost')
-  ? 'http://localhost:3000'
-  : 'https://api-cardapio-taupe.vercel.app';
+const API_URL =
+  location.hostname === 'localhost' ||
+  location.hostname === '127.0.0.1' ||
+  location.hostname === '' ||
+  location.protocol === 'file:'
+    ? 'http://localhost:3000'
+    : 'https://api-cardapio-taupe.vercel.app';
 
 // Função para obter categorias do backend
 async function obterCategorias() {
