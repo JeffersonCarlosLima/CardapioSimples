@@ -1,52 +1,42 @@
-$(document).ready(function() {
-    let itensCardapio = cardapio.metodos.obterItensCardapio();
+$(document).ready(async function() {
+    // Carregar e renderizar o menu de categorias do backend
+    const categorias = await obterCategorias();
+    let menuHtml = '';
+    categorias.forEach((cat, idx) => {
+        menuHtml += `<a id="menu-${cat}" onclick="obterItensCardapio('${cat}')" class="btn btn-white btn-sm mr-3${idx===0?' active':''}">
+            <i class="fas fa-utensils"></i>&nbsp; ${cat.charAt(0).toUpperCase() + cat.slice(1)}
+        </a>`;
+    });
+    $(".container-menu").html(menuHtml);
 
-    // Exemplo de como iterar pelos itens e anexá-los ao DOM
-    for (let i = 0; i < itensCardapio.length; i++) {
-        let item = itensCardapio[i];
-        let temp = cardapio.templates.item
-            .replace(/\${img}/g, item.img)
-            .replace(/\${name}/g, item.name)
-            .replace(/\${id}/g, item.id)
-            .replace(/\${price}/g, item.price);
-
-        $("#itensCardapio").append(temp);
+    // Carrega produtos da primeira categoria
+    if (categorias.length) {
+        obterItensCardapio(categorias[0]);
     }
 });
 
+// Função dinâmica: obtém e renderiza os itens de uma categoria
+async function obterItensCardapio(categoria) {
+    $("#itensCardapio").html('<p class="text-center">Carregando...</p>');
+    const produtos = await obterProdutos(categoria);
+    console.log('Produtos recebidos:', produtos);
+    $(".container-menu a").removeClass('active');
+    $(`#menu-${categoria}`).addClass('active');
 
-cardapio.metodos = {
-    // Obtem a lista de itens json do cardapio
-    obterItensCardapio:(categoria = 'burgers', verMais = false)=>{
-        let filtro = MENU[categoria];
-        if(!verMais){
-            $("#itensCardapio").html('')
-            $("#btnVerMais").removeClass('hidden')
-
-        }
-        
-        $.each(filtro, (i, e)=>{
-
-            let temp = cardapio.templates.item
+    let html = '';
+    produtos.forEach(e => {
+        let temp = cardapio.templates.item
             .replace(/\${img}/g, e.img)
             .replace(/\${name}/g, e.name)
             .replace(/\${description}/g, e.dsc)
             .replace(/\${id}/g, e.id)
             .replace(/\${price}/g, e.price.toFixed(2).replace('.',","));
-            //botão ver mais clicado 12 itens
-
-            if(!verMais && i < 100 ){
-                $("#itensCardapio").append(temp)
-            }
-        })
-
-        //remover o ativo após clicar no item
-        $(".container-menu a").removeClass('active');
-        //Setar menu para ativo
-        $("#menu-" + categoria).addClass('active');
-    },
+        html += temp;
+    });
+    $("#itensCardapio").html(html);
 }
 
+cardapio = {};
 cardapio.templates = {
     item: `
             <div class="card-item" id="\${id}">
@@ -66,6 +56,10 @@ cardapio.templates = {
     `,
 };
 
+cardapio.metodos = {
+    obterItensCardapio
+}
+
 function verificarLarguraDaTela() {
     var elemento = document.getElementById('itensCardapio');
     if (window.innerWidth >= 768) {
@@ -75,5 +69,4 @@ function verificarLarguraDaTela() {
     }
   }
 
-  // Chama a função ao carregar a página e redimensionar a janela
-  window.addEventListener('load', verificarLarguraDaTela);
+window.addEventListener('load', verificarLarguraDaTela);
