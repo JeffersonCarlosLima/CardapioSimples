@@ -1,153 +1,81 @@
-// Configurações do cardápio
-const cardapioConfig = {
-    animationDuration: 600,
-    loadingDelay: 300,
-    icons: {
-        'burgers': 'hamburger',
-        'pizzas': 'pizza-slice',
-        'churrasco': 'drumstick-bite',
-        'steaks': 'bacon',
-        'bebidas': 'cocktail',
-        'sobremesas': 'ice-cream'
-    }
-};
-
-// Templates do cardápio
-const templates = {
-    menuItem: (categoria, isActive = false) => `
-        <a id="menu-${categoria}" 
-           class="btn btn-white btn-sm mr-3 ${isActive ? 'active' : ''}"
-           data-categoria="${categoria}">
-            <i class="fas fa-${cardapioConfig.icons[categoria] || 'utensils'}"></i>
-            ${capitalize(categoria)}
-        </a>
-    `,
-    
-    produtoCard: (produto) => `
-        <div class="card-item" id="${produto.id}">
-            <div class="img-produto">
-                <img src="${produto.img}" alt="${produto.name}" loading="lazy"/>
-            </div>
-            <div class="dados-produto">
-                <h3 class="title-produto">${produto.name}</h3>
-                <p class="description">${produto.dsc}</p>
-                <p class="price-produto">R$ ${produto.price.toFixed(2).replace('.', ',')}</p>
-            </div>
-        </div>
-    `,
-
-    loading: () => `
-        <div class="text-center py-5">
-            <div class="spinner-border" role="status">
-                <span class="visually-hidden">Carregando...</span>
-            </div>
-        </div>
-    `,
-
-    error: (message) => `
-        <div class="alert alert-danger text-center" role="alert">
-            <i class="fas fa-exclamation-triangle me-2"></i>
-            ${message}
-        </div>
-    `
-};
-
-// Funções utilitárias
-const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
-
-const setState = (state) => {
-    const categoriaAtual = state.categoriaAtual;
-    history.pushState(state, '', `#${categoriaAtual}`);
-    document.querySelectorAll('.container-menu a').forEach(a => 
-        a.classList.toggle('active', a.dataset.categoria === categoriaAtual)
-    );
-};
-
-// Funções principais
-async function inicializarCardapio() {
-    const containerMenu = document.querySelector('.container-menu');
-    const itensCardapio = document.querySelector('#itensCardapio');
-    let categoriaInicial = window.location.hash.slice(1) || null;
-
+// Inicialização do cardápio
+document.addEventListener('DOMContentLoaded', async function() {
     try {
-        // Carregar categorias
-        containerMenu.innerHTML = templates.loading();
+        // Carregar categorias iniciais
         const categorias = await obterCategorias();
-        
-        if (!categorias.length) {
-            throw new Error('Nenhuma categoria disponível');
+        if (categorias && categorias.length > 0) {
+            // Carregar produtos da primeira categoria
+            await cardapio.metodos.obterItensCardapio(categorias[0]);
         }
-
-        // Se não houver categoria na URL ou ela não existir, usar a primeira
-        if (!categoriaInicial || !categorias.includes(categoriaInicial)) {
-            categoriaInicial = categorias[0];
-        }
-
-        // Renderizar menu de categorias
-        containerMenu.innerHTML = categorias
-            .map(cat => templates.menuItem(cat, cat === categoriaInicial))
-            .join('');
-
-        // Configurar eventos
-        containerMenu.addEventListener('click', async (e) => {
-            const button = e.target.closest('[data-categoria]');
-            if (!button) return;
-
-            e.preventDefault();
-            const categoria = button.dataset.categoria;
-            setState({ categoriaAtual: categoria });
-            await carregarProdutos(categoria);
-        });
-
-        // Carregar produtos da categoria inicial
-        await carregarProdutos(categoriaInicial);
-
     } catch (erro) {
         console.error('Erro na inicialização:', erro);
-        containerMenu.innerHTML = templates.error('Erro ao carregar o cardápio');
-    }
-}
-
-async function carregarProdutos(categoria) {
-    const itensCardapio = document.querySelector('#itensCardapio');
-    
-    try {
-        itensCardapio.innerHTML = templates.loading();
-        
-        const produtos = await obterProdutos(categoria);
-        
-        if (!produtos.length) {
-            itensCardapio.innerHTML = templates.error('Nenhum produto encontrado nesta categoria');
-            return;
-        }
-
-        // Fade out
-        itensCardapio.style.opacity = '0';
-        
-        // Atualizar conteúdo
-        setTimeout(() => {
-            itensCardapio.innerHTML = `
-                <div class="cardapio-container">
-                    ${produtos.map(produto => templates.produtoCard(produto)).join('')}
-                </div>
-            `;
-            
-            // Fade in
-            itensCardapio.style.opacity = '1';
-        }, cardapioConfig.loadingDelay);
-
-    } catch (erro) {
-        console.error('Erro ao carregar produtos:', erro);
-        itensCardapio.innerHTML = templates.error('Erro ao carregar produtos. Por favor, tente novamente.');
-    }
-}
-
-// Inicialização
-document.addEventListener('DOMContentLoaded', inicializarCardapio);
-
-// Manipulação do histórico
-window.addEventListener('popstate', (event) => {
-    if (event.state && event.state.categoriaAtual) {
-        carregarProdutos(event.state.categoriaAtual);
     }
 });
+
+// Objeto principal do cardápio
+const cardapio = {
+    // Templates
+    templates: {
+        item: `
+            <div class="card-item" id="\${id}">
+                <div class="img-produto">
+                    <img src="\${img}" alt="\${name}" loading="lazy"/>
+                </div>
+                <div class="dados-produto">
+                    <p class="title-produto">
+                        <b>\${name}</b>
+                    </p>
+                    <p class="description">\${description}</p>
+                    <p class="price-produto">
+                        <b>R$ \${price}</b>
+                    </p>
+                </div>
+            </div>
+        `
+    },
+
+    // Métodos
+    metodos: {
+        // Função para obter e renderizar itens do cardápio
+        obterItensCardapio: async (categoria) => {
+            try {
+                // Mostrar loading
+                document.getElementById('itensCardapio').innerHTML = '<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Carregando...</span></div></div>';
+                
+                // Buscar produtos
+                const produtos = await obterProdutos(categoria);
+                
+                // Atualizar botão ativo
+                document.querySelectorAll('.container-menu a').forEach(a => a.classList.remove('active'));
+                document.getElementById(`menu-${categoria}`).classList.add('active');
+
+                // Renderizar produtos
+                if (produtos && produtos.length > 0) {
+                    let html = '';
+                    produtos.forEach(produto => {
+                        html += cardapio.templates.item
+                            .replace(/\${img}/g, produto.img)
+                            .replace(/\${name}/g, produto.name)
+                            .replace(/\${description}/g, produto.dsc)
+                            .replace(/\${id}/g, produto.id)
+                            .replace(/\${price}/g, produto.price.toFixed(2).replace('.', ','));
+                    });
+                    
+                    const container = document.getElementById('itensCardapio');
+                    container.style.opacity = '0';
+                    container.innerHTML = html;
+                    
+                    // Fade in
+                    setTimeout(() => {
+                        container.style.opacity = '1';
+                    }, 100);
+                } else {
+                    document.getElementById('itensCardapio').innerHTML = '<p class="text-center">Nenhum produto encontrado nesta categoria.</p>';
+                }
+            } catch (erro) {
+                console.error('Erro ao carregar produtos:', erro);
+                document.getElementById('itensCardapio').innerHTML = '<p class="text-center text-danger">Erro ao carregar produtos. Tente novamente.</p>';
+            }
+        }
+    }
+};
