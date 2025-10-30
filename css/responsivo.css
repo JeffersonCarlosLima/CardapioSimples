@@ -94,10 +94,7 @@
         padding-top: 50px;
         padding-bottom: 50px;
     }
-    /*Ocultando mensagem no celular*/
-    .mensagem-cardapio{
-        display: none;
-    }
+
     .card-item {
         display: flex;
         flex-direction: row !important;

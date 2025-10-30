@@ -3,95 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/fontawesome.css">
-    <link rel="stylesheet" href="./css/animate.css">
-    <link rel="stylesheet" href="./css/main.css">
-    <link rel="stylesheet" href="./css/responsivo.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
-    <title>Cardápio Digital</title>
+    <title>Cardápio - Consumo de API</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<section class="header">
- <div class="container">
-    <section class="top-bar">  
-        <img src="./img/logo.svg" alt="logo" width="150" height="150">  
-    </section>
- </div>
-</section>
-<section class="cardapio" id="cardapio">
-    <div class="background-cardapio"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-center">
-                <span class="hint-title"><b>Seja bem-vindo</b></span>
-                <h1 class="titulo-cardapio"><b>Conheça nosso Cardápio</b></h1>
-            
-            </div>
-            <div class="col-12 container-do-container-meu">
-            <div class="container-menu">
-                <a id="menu-burgers" onclick="cardapio.metodos.obterItensCardapio('burgers')" class="btn btn-white btn-sm mr-3 active">
-                    <i class="fas fa-hamburger"></i>&nbsp; Burgers
-                </a>
-                <a id="menu-pizzas" onclick="cardapio.metodos.obterItensCardapio('pizzas')" class="btn btn-white btn-sm mr-3">
-                    <i class="fas fa-pizza-slice"></i>&nbsp; Pizzas
-                </a>
-                <a id="menu-churrasco" onclick="cardapio.metodos.obterItensCardapio('churrasco')" class="btn btn-white btn-sm mr-3">
-                    <i class="fas fa-drumstick-bite"></i>&nbsp; Churrasco
-                </a>
-                <a id="menu-steaks" onclick="cardapio.metodos.obterItensCardapio('steaks')" class="btn btn-white btn-sm mr-3">
-                    <i class="fas fa-bacon"></i>&nbsp; Steaks
-                </a>
-                <a id="menu-bebidas" onclick="cardapio.metodos.obterItensCardapio('bebidas')" class="btn btn-white btn-sm mr-3">
-                    <i class="fas fa-cocktail"></i>&nbsp; Bebidas
-                </a> 
-                <a id="menu-sobremesas" onclick="cardapio.metodos.obterItensCardapio('sobremesas')" class="btn btn-white btn-sm mr-3">
-                    <i class="fas fa-ice-cream"></i>&nbsp; Sobremesas
-                </a>
-            </div>
-        </div>
-            <h1 class="mensagem-cardapio">Visualize o nosso cardápio através do celular</h1>
-            <div class="container cardapio-container" id="itensCardapio">
-            </div>       
-</section>
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-6 col-lg-3 col-md-3 container-logo-footer">
-                <img src="./img/logo.svg" alt="logomarca" class="logo-footer" width="100" height="100">
-            </div>
-            <div class="col-6 col-lg-6 col-md-6 container-text-footer">
-                <p class="mb-0">
-                    <b>Menu Online</b>&copy; Todos os direitos reservados.
-                </p>
-            </div>
-            <div class="col-12 col-lg-3 col-md-3 container-redes-footer">
-               <div class="social-icons">
-                        <a href="" class="btn-social">
-                            <i class="fab fa-instagram"></i>
-                        </a> 
-                        <a href="" class="btn-social">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="" class="btn-social">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
+    <div class="container py-4">
+        <h1 class="h4 mb-4">Cardápio Digital</h1>
+
+        <div id="categorias" class="mb-3"></div>
+
+        <div class="card">
+            <div class="card-header">Produtos</div>
+            <div class="card-body" id="produtos">
+                <div class="text-muted">Selecione uma categoria para visualizar.</div>
             </div>
         </div>
     </div>
-    <!--Footer-->
-</footer>
-   
-    <!-- End Modal Carrinho de compras-->
-<script type="text/javascript" src="./js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./js/bootstrap.bundle.js"></script>
-<script type="text/javascript" src="./js/popper.min.js"></script>
-<script type="text/javascript" src="./js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="./js/modernizr-3.5.0.min.js"></script>
-<script type="text/javascript" src="./js/dados.js"></script>
-<script type="text/javascript" src="./js/app.js"></script>
+
+    <script type="module" src="./js/main.js"></script>
 
 </body>
 </html>
