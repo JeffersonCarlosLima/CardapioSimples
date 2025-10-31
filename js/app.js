@@ -11,9 +11,17 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             // Carregar produtos da primeira categoria
             await cardapio.metodos.obterItensCardapio(categorias[0]);
+            // Mostrar notificação se estiver usando dados offline
+            if (window.mostrarNotificacaoOffline) {
+                window.mostrarNotificacaoOffline();
+            }
         }
     } catch (erro) {
         console.error('Erro na inicialização:', erro);
+        // Tenta usar dados offline em caso de erro
+        if (window.mostrarNotificacaoOffline) {
+            window.mostrarNotificacaoOffline();
+        }
     }
 });
 
