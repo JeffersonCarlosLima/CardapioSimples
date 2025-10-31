@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Carregar categorias iniciais
         const categorias = await obterCategorias();
         if (categorias && categorias.length > 0) {
+            // Selecionar o primeiro botão do menu
+            const primeiroMenu = document.querySelector('.container-menu a');
+            if (primeiroMenu) {
+                primeiroMenu.classList.add('active');
+            }
             // Carregar produtos da primeira categoria
             await cardapio.metodos.obterItensCardapio(categorias[0]);
         }
@@ -18,17 +23,11 @@ const cardapio = {
     templates: {
         item: `
             <div class="card-item" id="\${id}">
-                <div class="img-produto">
-                    <img src="\${img}" alt="\${name}" loading="lazy"/>
-                </div>
-                <div class="dados-produto">
-                    <p class="title-produto">
-                        <b>\${name}</b>
-                    </p>
-                    <p class="description">\${description}</p>
-                    <p class="price-produto">
-                        <b>R$ \${price}</b>
-                    </p>
+                <img src="\${img}" alt="\${name}" loading="lazy"/>
+                <div class="card-item-content">
+                    <h3 class="card-item-title">\${name}</h3>
+                    <p class="card-item-desc">\${description}</p>
+                    <div class="card-item-price">R$ \${price}</div>
                 </div>
             </div>
         `
@@ -46,8 +45,19 @@ const cardapio = {
                 const produtos = await obterProdutos(categoria);
                 
                 // Atualizar botão ativo
-                document.querySelectorAll('.container-menu a').forEach(a => a.classList.remove('active'));
-                document.getElementById(`menu-${categoria}`).classList.add('active');
+                if (categoria) {
+                    document.querySelectorAll('.container-menu a').forEach(a => a.classList.remove('active'));
+                    const menuButton = document.getElementById(`menu-${categoria}`);
+                    if (menuButton) {
+                        menuButton.classList.add('active');
+                    } else {
+                        // Se não encontrar o botão específico, mantém o primeiro ativo
+                        const primeiroMenu = document.querySelector('.container-menu a');
+                        if (primeiroMenu) {
+                            primeiroMenu.classList.add('active');
+                        }
+                    }
+                }
 
                 // Renderizar produtos
                 if (produtos && produtos.length > 0) {
