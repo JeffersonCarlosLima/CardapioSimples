@@ -1,10 +1,21 @@
-// Estado da aplicação
-let isUnloading = false;
+// Controle de requisições
+let currentController = null;
 
-// Listener para quando a página estiver sendo descarregada
-window.addEventListener('beforeunload', () => {
-    isUnloading = true;
-});
+// Função para obter um novo AbortController
+function getController() {
+    if (currentController) {
+        currentController.abort(); // Cancela requisição anterior se existir
+    }
+    currentController = new AbortController();
+    return currentController;
+}
+
+// Limpar recursos quando a página for fechada
+window.addEventListener('pagehide', () => {
+    if (currentController) {
+        currentController.abort();
+    }
+}, { capture: true });
 
 // Exportando funções para o escopo global
 window.obterCategorias = obterCategorias;
@@ -40,15 +51,25 @@ function mostrarErro(mensagem) {
     }, 5000);
 }
 
-// Configuração padrão para fetch
-const fetchConfig = {
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Origin': window.location.origin
-    },
-    mode: 'cors'
-};
+// Função para obter configuração do fetch
+// Retorna configuração de fetch. Evita enviar 'Content-Type: application/json' em GET
+// para não disparar preflight desnecessário. Para requisições com body, passe method != 'GET'.
+function getFetchConfig(method = 'GET') {
+    const headers = {
+        'Accept': 'application/json'
+    };
+
+    if (method && method.toUpperCase() !== 'GET') {
+        headers['Content-Type'] = 'application/json';
+    }
+
+    return {
+        headers,
+        mode: 'cors',
+        method: method,
+        signal: getController().signal
+    };
+}
 
 // Função para tratamento de resposta da API
 async function handleApiResponse(response, context) {
@@ -73,25 +94,19 @@ async function handleApiResponse(response, context) {
 // Função para obter categorias
 async function obterCategorias() {
     try {
-        // Não continuar se a página estiver sendo descarregada
-        if (isUnloading) return [];
-        
-        const response = await fetch(`${API_URL}/categorias`, fetchConfig);
+        const response = await fetch(`${API_URL}/categorias`, getFetchConfig());
         const data = await handleApiResponse(response, 'Erro ao carregar categorias');
         return data;
     } catch (erro) {
-        console.warn('Usando dados locais para categorias devido a erro:', erro);
-        usandoFallback = true;
-        notificarModoOffline();
-        return dadosFallback.categorias;
+        console.warn('Erro ao buscar categorias:', erro);
+        mostrarErro('Não foi possível carregar as categorias. Verifique sua conexão ou tente novamente mais tarde.');
+        // Retornar lista vazia quando a API não estiver disponível
+        return [];
     }
 }
 
 // Função para obter produtos de uma categoria específica
 async function obterProdutos(categoria) {
-    // Não continuar se a página estiver sendo descarregada
-    if (isUnloading) return [];
-
     if (!categoria) {
         console.error('Categoria não especificada');
         return [];
@@ -99,13 +114,13 @@ async function obterProdutos(categoria) {
 
     try {
         const url = `${API_URL}/produtos/${encodeURIComponent(categoria)}`;
-        const response = await fetch(url, fetchConfig);
+        const response = await fetch(url, getFetchConfig());
         const data = await handleApiResponse(response, `Erro ao carregar produtos da categoria ${categoria}`);
         return data;
     } catch (erro) {
-        console.warn(`Usando dados locais para categoria ${categoria} devido a erro:`, erro);
-        usandoFallback = true;
-        notificarModoOffline();
-        return dadosFallback.produtos[categoria] || [];
+        console.warn(`Erro ao buscar produtos da categoria ${categoria}:`, erro);
+        mostrarErro('Não foi possível carregar os produtos. Verifique sua conexão ou tente novamente mais tarde.');
+        // Retornar lista vazia quando a API não estiver disponível
+        return [];
     }
 }
