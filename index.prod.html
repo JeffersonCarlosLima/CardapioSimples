@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Digital</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/responsivo.css">
+</head>
+<body>
+    <section class="header">
+        <div class="container">
+            <section class="top-bar">
+                <img src="./img/logo.svg" alt="logo" width="150" height="150">
+            </section>
+        </div>
+    </section>
+
+    <section class="cardapio" id="cardapio">
+        <div class="background-cardapio"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <span class="hint-title"><b>Seja bem-vindo</b></span>
+                    <h1 class="titulo-cardapio"><b>Conheça nosso Cardápio</b></h1>
+                </div>
+                <div class="col-12 container-do-container-meu">
+                    <div class="container-menu">
+                        <a id="menu-burgers" onclick="cardapio.metodos.obterItensCardapio('burgers')" class="btn btn-white btn-sm mr-3 active">
+                            <i class="fas fa-hamburger"></i>&nbsp; Burgers
+                        </a>
+                        <a id="menu-pizzas" onclick="cardapio.metodos.obterItensCardapio('pizzas')" class="btn btn-white btn-sm mr-3">
+                            <i class="fas fa-pizza-slice"></i>&nbsp; Pizzas
+                        </a>
+                        <a id="menu-churrasco" onclick="cardapio.metodos.obterItensCardapio('churrasco')" class="btn btn-white btn-sm mr-3">
+                            <i class="fas fa-drumstick-bite"></i>&nbsp; Churrasco
+                        </a>
+                        <a id="menu-steaks" onclick="cardapio.metodos.obterItensCardapio('steaks')" class="btn btn-white btn-sm mr-3">
+                            <i class="fas fa-bacon"></i>&nbsp; Steaks
+                        </a>
+                        <a id="menu-bebidas" onclick="cardapio.metodos.obterItensCardapio('bebidas')" class="btn btn-white btn-sm mr-3">
+                            <i class="fas fa-cocktail"></i>&nbsp; Bebidas
+                        </a> 
+                        <a id="menu-sobremesas" onclick="cardapio.metodos.obterItensCardapio('sobremesas')" class="btn btn-white btn-sm mr-3">
+                            <i class="fas fa-ice-cream"></i>&nbsp; Sobremesas
+                        </a>
+                    </div>
+                </div>
+                <div class="container cardapio-container" id="itensCardapio">
+                </div>       
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-6 col-lg-3 col-md-3 container-logo-footer">
+                    <img src="./img/logo.svg" alt="logomarca" class="logo-footer" width="100" height="100">
+                </div>
+                <div class="col-6 col-lg-6 col-md-6 container-text-footer">
+                    <p class="mb-0">
+                        <b>Menu Online</b>&copy; Todos os direitos reservados.
+                    </p>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 container-redes-footer">
+                   <div class="social-icons">
+                        <a href="" class="btn-social">
+                            <i class="fab fa-instagram"></i>
+                        </a> 
+                        <a href="" class="btn-social">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="" class="btn-social">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts principais -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Scripts da aplicação -->
+    <script type="text/javascript" src="./js/dados.prod.js"></script>
+    <script type="text/javascript" src="./js/app.js" defer></script>
+</body>
+</html>
