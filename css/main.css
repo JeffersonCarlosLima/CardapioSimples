@@ -1,133 +1,200 @@
+/* 1. NOVA PALETA DE CORES (Baseada na imagem) */
 :root {
-    --ifood-red: #ea1d2c;
-    --ifood-gray: #717171;
-    --ifood-light-gray: #f7f7f7;
-    --ifood-dark: #3e3e3e;
+    --color-primary: #00A680; /* Verde/Teal para preços e destaques */
+    --color-header-bg: #2d2d2d; /* Fundo escuro do header */
+    --color-pill-bg: #3e3e3e;   /* Fundo escuro dos botões de categoria */
+    --color-text-primary: #333333; /* Texto principal (títulos) */
+    --color-text-secondary: #717171; /* Texto secundário (descrições) */
+    --color-background: #f7f7f7; /* Fundo geral da página */
+    --color-white: #ffffff;
+    --color-border: #eeeeee;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: var(--ifood-light-gray);
-    color: var(--ifood-dark);
+    font-family: 'Roboto', sans-serif; /* Apenas Roboto */
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
 }
 
+/* 2. NOVO HEADER */
 .header {
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: var(--color-header-bg);
+    color: var(--color-white);
     padding: 1rem 0;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.hint-title {
-    color: var(--ifood-red);
-    font-size: 1.1rem;
-    font-weight: 500;
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centraliza logo e título */
+    margin-bottom: 1rem;
+    gap: 0.75rem;
 }
 
-.titulo-cardapio {
-    font-family: 'Playfair Display', serif;
-    color: var(--ifood-dark);
-    margin: 1rem 0 2rem 0;
+.header-logo {
+    height: 40px;
+    width: 40px;
 }
 
+.header-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.search-bar {
+    position: relative;
+}
+
+.search-bar .fa-search {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: var(--color-text-secondary);
+}
+
+.search-bar input {
+    width: 100%;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 25px;
+    padding: 0.6rem 1rem 0.6rem 2.5rem; /* Espaço para o ícone */
+    font-size: 0.9rem;
+}
+.search-bar input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(0,166,128, 0.2);
+}
+
+
+/* 3. NOVOS BOTÕES DE CATEGORIA */
 .container-menu {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    padding: 1rem 0;
-    gap: 0.5rem;
+    padding: 1.5rem 0;
+    gap: 0.75rem;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    margin-bottom: 2rem;
+    scrollbar-width: none; /* Firefox */
 }
 
 .container-menu::-webkit-scrollbar {
-    display: none;
+    display: none; /* Chrome, Safari */
 }
 
-.btn-white {
-    background-color: white;
-    color: var(--ifood-gray);
-    border: 1px solid #ddd;
+/* Estilo direto na tag 'a' que será gerada pelo JS */
+.container-menu a {
+    background-color: var(--color-pill-bg);
+    color: var(--color-white);
+    border: none;
     border-radius: 20px;
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
     transition: all 0.3s ease;
     white-space: nowrap;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
-.btn-white:hover,
-.btn-white.active {
-    background-color: var(--ifood-red);
-    color: white;
-    border-color: var(--ifood-red);
+.container-menu a:hover {
+    opacity: 0.8;
 }
 
+.container-menu a.active {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+/* 4. NOVO LAYOUT DE LISTA (CARDÁPIO) */
 .cardapio-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-    padding: 1rem 0;
+    display: flex;
+    flex-direction: column; /* Itens empilhados verticalmente */
+    gap: 1rem; /* Espaço entre os itens */
 }
 
+/* Títulos de seção (Ex: Espetos, Porções) */
+.secao-titulo {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* 5. NOVO CARD-ITEM (Layout de Lista) */
 .card-item {
-    background: white;
+    display: flex; /* LAYOUT DE LISTA */
+    align-items: center; /* Alinha verticalmente */
+    background: var(--color-white);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    transition: box-shadow 0.3s ease;
 }
 
 .card-item:hover {
-    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .card-item img {
-    width: 100%;
-    height: 200px;
+    width: 90px;
+    height: 90px;
     object-fit: cover;
+    margin: 0.75rem; /* Espaçamento da imagem */
+    border-radius: 8px; /* Cantos arredondados na imagem */
 }
 
 .card-item-content {
-    padding: 1rem;
+    flex: 1; /* Ocupa o espaço restante */
+    padding: 0.75rem 0.5rem 0.75rem 0;
 }
 
 .card-item-title {
-    font-weight: 500;
+    font-weight: 700;
     font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    color: var(--ifood-dark);
+    margin-bottom: 0.25rem;
+    color: var(--color-text-primary);
 }
 
 .card-item-desc {
-    color: var(--ifood-gray);
+    color: var(--color-text-secondary);
     font-size: 0.9rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    /* Limita a descrição a 2 linhas */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
+/* Preço movido para fora do content para ficar na direita */
 .card-item-price {
-    color: var(--ifood-red);
-    font-weight: 500;
-    font-size: 1.2rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 1rem;
+    white-space: nowrap;
 }
 
-footer {
-    background-color: white;
+/* 6. FOOTER (Apenas ajustando cores) */
+.footer {
+    background-color: var(--color-white);
     padding: 2rem 0;
     margin-top: 3rem;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--color-border);
 }
 
 .container-logo-footer img {
-    max-width: 120px;
+    max-width: 100px; /* Ajustado */
 }
 
 .container-text-footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--ifood-gray);
+    color: var(--color-text-secondary);
 }
 
 .container-redes-footer {
@@ -145,26 +212,15 @@ footer {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: var(--ifood-light-gray);
+    background-color: var(--color-background);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--ifood-dark);
+    color: var(--color-text-primary);
     transition: all 0.3s ease;
 }
 
 .btn-social:hover {
-    background-color: var(--ifood-red);
-    color: white;
-}
-
-@media (max-width: 768px) {
-    .container-redes-footer {
-        justify-content: center;
-        margin-top: 1rem;
-    }
-    
-    .container-text-footer {
-        text-align: center;
-    }
+    background-color: var(--color-primary);
+    color: var(--color-white);
 }

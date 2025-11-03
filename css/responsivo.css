@@ -1,62 +1,47 @@
-@media (max-width: 1200px) {
-    .cardapio-container {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+@media (max-width: 768px) {
+    .header-content {
+        /* No mobile, o logo e título podem ficar centralizados */
+        justify-content: center;
+    }
+    
+    .container-redes-footer {
+        justify-content: center;
+        margin-top: 1.5rem;
+    }
+    
+    .container-text-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+
+    .container-logo-footer {
+        display: flex;
+        justify-content: center;
     }
 }
 
-@media (max-width: 768px) {
-    .cardapio-container {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 1rem;
-    }
-
-    .container-menu {
-        padding: 0.5rem;
-    }
-
-    .btn-white {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.9rem;
-    }
-
-    .titulo-cardapio {
-        font-size: 1.8rem;
-    }
-
-    .hint-title {
-        font-size: 1rem;
+@media (max-width: 576px) {
+    .card-item {
+        /* Opcional: se o título for muito grande, quebre o preço para baixo */
+        /* flex-wrap: wrap; */
     }
 
     .card-item-title {
         font-size: 1rem;
     }
-
+    
     .card-item-desc {
         font-size: 0.85rem;
     }
 
     .card-item-price {
-        font-size: 1.1rem;
-    }
-}
-
-@media (max-width: 576px) {
-    .cardapio-container {
-        grid-template-columns: 1fr;
-        padding: 0 1rem;
+        font-size: 1rem;
+        padding: 1rem 0.75rem;
     }
 
     .card-item img {
-        height: 180px;
-    }
-
-    .container-logo-footer {
-        text-align: center;
-        margin-bottom: 1rem;
-    }
-
-    .container-text-footer p {
-        text-align: center;
-        margin-bottom: 1rem;
+        width: 80px;
+        height: 80px;
+        margin: 0.5rem;
     }
 }
